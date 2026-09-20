@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskKu - Manajemen Tugas Sekolah</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✓</div>
+        <div>
+          <h2>TaskKu</h2>
+          <small>Plan • Do • Succeed</small>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-item active" data-page="dashboard">⌂ <span>Beranda</span></button>
+        <button class="nav-item" data-page="tasks">☑ <span>Tugas</span></button>
+        <button class="nav-item" data-page="calendar">▣ <span>Kalender</span></button>
+        <button class="nav-item" data-page="progress">◔ <span>Progress</span></button>
+        <button class="nav-item" data-page="notifications">♧ <span>Notifikasi</span></button>
+      </nav>
+
+      <div class="profile">
+        <div class="avatar">KA</div>
+        <div>
+          <strong>Khanssa</strong>
+          <small>SMK N 3 Jember</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">TASK MANAGEMENT</p>
+          <h1 id="pageTitle">Selamat Datang </h1>
+        </div>
+        <button class="icon-btn" id="notificationBtn" title="Notifikasi"><span id="notificationDot"></span></button>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="page active-page" id="dashboard">
+        <div class="welcome">
+          <div>
+            <h2>Kelola tugas sekolah dengan lebih mudah.</h2>
+            <p>Catat tugas, deadline, prioritas, dan pantau progress kamu.</p>
+          </div>
+          <button class="primary-btn" id="addTaskBtn">＋ Tambah Tugas</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat-card blue"><span>📋</span><small>Total Tugas</small><strong id="totalCount">0</strong></div>
+          <div class="stat-card green"><span>✓</span><small>Selesai</small><strong id="doneCount">0</strong></div>
+          <div class="stat-card red"><span>◷</span><small>Belum Selesai</small><strong id="pendingCount">0</strong></div>
+          <div class="stat-card purple"><span>★</span><small>Prioritas Tinggi</small><strong id="highCount">0</strong></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card schedule-card">
+            <div class="card-head">
+              <div><h3>📚 Jadwal Pelajaran</h3><p id="todayLabel"></p></div>
+              <button class="text-btn" data-page-target="calendar">Lihat Kalender</button>
+            </div>
+            <div class="schedule-grid" id="scheduleGrid"></div>
+          </div>
+
+          <div class="card mini-calendar">
+            <div class="card-head">
+              <h3>📅 Kalender</h3>
+              <div class="calendar-actions">
+                <button id="prevMonth">‹</button>
+                <strong id="monthTitle"></strong>
+                <button id="nextMonth">›</button>
+              </div>
+            </div>
+            <div class="calendar-week">
+              <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+            </div>
+            <div class="calendar-days" id="calendarDays"></div>
+          </div>
+
+          <div class="card deadline-card">
+            <div class="card-head">
+              <h3> Tugas Mendekati Deadline</h3>
+              <button class="text-btn" data-page-target="tasks">Lihat Semua</button>
+            </div>
+            <div id="deadlineList" class="task-list"></div>
+          </div>
+
+          <div class="card progress-card">
+            <div class="card-head"><h3> Progress Tugas</h3></div>
+            <div class="progress-wrap">
+              <div class="donut"><span id="progressPercent">0%</span></div>
+              <div class="legend">
+                <p><i class="dot green-dot"></i> Selesai <b id="legendDone">0</b></p>
+                <p><i class="dot blue-dot"></i> Belum selesai <b id="legendPending">0</b></p>
+                <p><i class="dot gray-dot"></i> Total <b id="legendTotal">0</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TASKS -->
+      <section class="page" id="tasks">
+        <div class="section-title">
+          <div><h2>Daftar Tugas</h2><p>Tambah dan kelola semua tugas sekolah.</p></div>
+          <button class="primary-btn" id="addTaskBtn2">＋ Tambah Tugas</button>
+        </div>
+        <div class="filters">
+          <input id="searchTask" type="search" placeholder=" Cari tugas...">
+          <select id="filterPriority">
+            <option value="all">Semua Prioritas</option>
+            <option value="high">Tinggi</option>
+            <option value="medium">Sedang</option>
+            <option value="low">Rendah</option>
+          </select>
+          <select id="filterStatus">
+            <option value="all">Semua Status</option>
+            <option value="pending">Belum selesai</option>
+            <option value="done">Selesai</option>
+          </select>
+        </div>
+        <div id="allTasks" class="all-tasks"></div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section class="page" id="calendar">
+        <div class="section-title"><div><h2>Kalender & Jadwal</h2><p>Lihat deadline tugas dan jadwal pelajaran.</p></div></div>
+        <div class="card full-calendar-card">
+          <div class="big-calendar-head">
+            <button id="bigPrev">‹</button>
+            <h2 id="bigMonthTitle"></h2>
+            <button id="bigNext">›</button>
+          </div>
+          <div class="big-week">
+            <span>Senin</span><span>Selasa</span><span>Rabu</span><span>Kamis</span><span>Jumat</span><span>Sabtu</span><span>Minggu</span>
+          </div>
+          <div class="big-calendar-days" id="bigCalendarDays"></div>
+        </div>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="page" id="progress">
+        <div class="section-title"><div><h2>Progress Tugas</h2><p>Pantau tugas yang sudah dan belum selesai.</p></div></div>
+        <div class="progress-overview card">
+          <div class="big-donut"><span id="bigProgressPercent">0%</span></div>
+          <div>
+            <h3>Progress keseluruhan</h3>
+            <p id="progressText">Belum ada tugas.</p>
+            <div class="progress-bar"><span id="progressBar"></span></div>
+          </div>
+        </div>
+        <div id="progressTaskList" class="all-tasks"></div>
+      </section>
+
+      <!-- NOTIFICATIONS -->
+      <section class="page" id="notifications">
+        <div class="section-title"><div><h2>Notifikasi</h2><p>Informasi tugas yang perlu kamu perhatikan.</p></div></div>
+        <div id="notificationList" class="notification-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal hidden" id="taskModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div><h2 id="modalTitle">Tambah Tugas</h2><p>Isi informasi tugas sekolah.</p></div>
+        <button class="close-btn" id="closeModal">×</button>
+      </div>
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+        <label>Judul Tugas
+          <input id="taskTitle" required placeholder="Contoh: Membuat Project Web">
+        </label>
+        <label>Mata Pelajaran
+          <select id="taskSubject" required>
+            <option value="">Pilih mata pelajaran</option>
+            <option>MP RPL</option><option>PKKRPL</option><option>KK</option>
+            <option>RPL</option><option>MTK</option><option>BK</option>
+            <option>Pendidikan Pancasila</option><option>PABP</option>
+            <option>Bahasa Indonesia</option><option>Bahasa Inggris</option>
+          </select>
+        </label>
+        <div class="form-row">
+          <label>Deadline <input type="date" id="taskDate" required></label>
+          <label>Prioritas
+            <select id="taskPriority">
+              <option value="low">Rendah</option>
+              <option value="medium" selected>Sedang</option>
+              <option value="high">Tinggi</option>
+            </select>
+          </label>
+        </div>
+        <label>Deskripsi
+          <textarea id="taskDescription" rows="4" placeholder="Tulis keterangan tugas..."></textarea>
+        </label>
+        <button class="primary-btn full-btn" type="submit">Simpan Tugas</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
