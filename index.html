@@ -7,7 +7,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
+
+  <!-- ===== LOGIN ===== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box" id="loginBox">
+      <div class="login-icon">✓</div>
+      <h1>TaskKu</h1>
+      <p class="login-tagline">Plan • Do • Succeed</p>
+      <p class="login-desc">Masuk pakai nama dan sandi kamu 😊</p>
+      <form id="loginForm" novalidate>
+        <label>Nama Siswa
+          <input id="studentName" type="text" placeholder="Contoh: Khanssa" maxlength="30" autocomplete="off">
+        </label>
+        <label>Sandi
+          <div class="password-wrap">
+            <input id="studentPass" type="password" placeholder="Masukkan sandi" autocomplete="off">
+            <button type="button" class="toggle-pass" id="togglePass" title="Lihat sandi">👁</button>
+          </div>
+        </label>
+        <p class="login-error" id="loginError"></p>
+        <button class="primary-btn full-btn" type="submit">Masuk Sekarang</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app" id="appRoot">
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-icon">✓</div>
@@ -26,11 +50,12 @@
       </nav>
 
       <div class="profile">
-        <div class="avatar">KA</div>
-        <div>
-          <strong>Khanssa</strong>
+        <div class="avatar" id="avatarText">?</div>
+        <div class="profile-info">
+          <strong id="profileName">Siswa</strong>
           <small>SMK N 3 Jember</small>
         </div>
+        <button class="logout-btn" id="logoutBtn" title="Keluar">⏻</button>
       </div>
     </aside>
 
@@ -38,16 +63,16 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">TASK MANAGEMENT</p>
-          <h1 id="pageTitle">Selamat Datang </h1>
+          <h1 id="pageTitle">Selamat Datang</h1>
         </div>
-        <button class="icon-btn" id="notificationBtn" title="Notifikasi"><span id="notificationDot"></span></button>
+        <button class="icon-btn" id="notificationBtn" title="Notifikasi">🔔<span id="notificationDot"></span></button>
       </header>
 
       <!-- DASHBOARD -->
       <section class="page active-page" id="dashboard">
         <div class="welcome">
           <div>
-            <h2>Kelola tugas sekolah dengan lebih mudah.</h2>
+            <h2>Halo, <span id="welcomeName">Siswa</span>! 👋</h2>
             <p>Catat tugas, deadline, prioritas, dan pantau progress kamu.</p>
           </div>
           <button class="primary-btn" id="addTaskBtn">＋ Tambah Tugas</button>
